@@ -2,6 +2,7 @@ import React from 'react'
 import './loginPage.scss'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
 
 function LoginPage() {
 
@@ -9,8 +10,8 @@ function LoginPage() {
     const { register, handleSubmit } = useForm()
 
     const onSubmit = (data) => {
-        console.log(data);
-        console.log("submitted");
+        // console.log(data);
+        axios.post('api/login', data).then(result => console.log(result.data))
     }
 
 
@@ -30,7 +31,7 @@ function LoginPage() {
                     </div>
                     <div>
                         <label htmlFor="password">Password</label>
-                        <input type="text" 
+                        <input type="password" 
                                id="password"
                                name="password"
                                required

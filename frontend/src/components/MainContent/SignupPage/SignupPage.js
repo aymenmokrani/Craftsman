@@ -2,6 +2,7 @@ import React from 'react'
 import './signupPage.scss'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
 
 function SignupPage() {
 
@@ -9,8 +10,8 @@ function SignupPage() {
 
 
     const onSubmit = (data) => {
-        console.log(data);
-        console.log("submitted");
+        axios.post('api/signup', data)
+            .then(result => console.log(result.data))
     }
 
     return (

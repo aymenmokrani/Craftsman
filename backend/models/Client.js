@@ -16,7 +16,10 @@ const ClientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    craftsmen: [Number]
+    craftsmen: {
+        type: [Number],
+        default: []
+    }
 })
 
 const Client = mongoose.model('client', ClientSchema)

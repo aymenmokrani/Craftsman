@@ -16,7 +16,10 @@ const CrafstmanSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    clients: [Number],
+    clients: {
+        type: [Number],
+        default: []
+    },
     reviews: [{
         owner: {
             type: String,

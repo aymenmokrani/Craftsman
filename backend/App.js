@@ -15,7 +15,7 @@ const bodyParser = require('body-parser')
 
 // MiddleWares
 app.use(bodyParser.json())
-app.use('/', authRoutes)
+app.use('/api', authRoutes)
 
 
 
