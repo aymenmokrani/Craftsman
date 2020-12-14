@@ -1,0 +1,56 @@
+.navBar {
+  height: 80px;
+  background-color: white;
+  box-shadow: 0 -50px 20px 40px black;
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
+  z-index: 1;
+}
+
+.navBar .logo {
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
+}
+
+.navBar .searchBar {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.navBar .searchBar > input {
+  padding: 15px 30px;
+  min-width: 150px;
+  width: 20%;
+  border-radius: 20px;
+  border: 1px solid #999;
+  background-color: #eee;
+  font-size: 16px;
+  outline: none;
+}
+
+.navBar .actions {
+  display: flex;
+}
+
+.actions button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  background-color: transparent;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  outline: none;
+}
+
+.actions button:hover {
+  background-color: #333;
+  color: white;
+}

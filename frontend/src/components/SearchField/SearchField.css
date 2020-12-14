@@ -1,0 +1,72 @@
+.searchField {
+  width: 100%;
+}
+
+.searchField .cover {
+  height: 150px;
+  width: 100%;
+  background-image: linear-gradient(
+    to right top,
+    #eaa72b,
+    #efaf39,
+    #f5b746,
+    #fabf53,
+    #ffc75f
+  );
+}
+
+.searchField .filterField {
+  height: 150px;
+  width: 80%;
+  margin: auto;
+  background-color: white;
+  border-radius: 20px;
+  margin-top: -50px;
+  box-shadow: 0 5px 10px -10px black;
+  display: flex;
+  flex-direction: column;
+  align-items: space-evenly;
+  padding: 0 20px;
+}
+
+.filterField .filterTitle {
+  padding: 20px;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterTitle span {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.filterTitle button {
+  padding: 10px 40px;
+  background-color: white;
+  border: 2px solid #333;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: 0;
+  transition: 0.2s ease-in-out;
+}
+
+.filterTitle button:hover {
+  background-color: #333;
+  color: white;
+}
+
+.filterField .filterInputs {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.filterInputs input {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px #333 solid;
+  font-size: 15px;
+  outline: none;
+}

@@ -2,8 +2,40 @@ const express = require('express')
 const app = express()
 const port = 4000
 
-app.get('/getmedata', (req, res)=> {
-    res.send('here is your data chief')
+const Client = require('./models/Client')
+const Category = require('./models/Category')
+const Crafsman = require('./models/Craftsman')
+const Job = require('./models/Job')
+const authRoutes = require('./routes/AuthRoutes')
+
+const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
+const bodyParser = require('body-parser')
+
+
+// MiddleWares
+app.use(bodyParser.json())
+app.use('/', authRoutes)
+
+
+
+
+
+// Database connecion
+mongoose.connect('mongodb://localhost/craftsmanDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: true
 })
+mongoose.connection.once('open', () => {
+  console.log("Connection success");
+}).on('error', err => console.log(err))
+
+
+
+
+
+app.get('/', (req, res) => {})
+
  
 app.listen(port, () => {console.log(`listening to ${port}`);})
