@@ -1,22 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './signupPage.scss'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 
 function SignupPage() {
 
-    const { register, handleSubmit} = useForm()
+    let history = useHistory()
 
+    const { register, handleSubmit} = useForm()
+    const [emailErr, setEmailErr] = useState('')
+    const [passErr, setPassErr] = useState('')
 
     const onSubmit = async (data) => {
-        const results = await axios.post('api/signup', data)
-        if (results.data.hasOwnProperty('errors')) {
-            Object.values(results.data.errors).forEach(val => {
-                val.length && console.log(val);
-            })
-        } else {
-            console.log(results.data)
+        setEmailErr('')
+        setPassErr('')
+        try {
+            const results = await axios.post('api/signup', data)
+            console.log(results.data);
+            history.push('/')
+        }
+        catch (err) {
+            const errs = err.response.data.errors
+            console.log(errs);
+            setEmailErr(errs.email)
+            setPassErr(errs.password)
         }
         
     }
@@ -31,8 +39,10 @@ function SignupPage() {
                         <input type="email" 
                                id="email" 
                                name="email" 
+                               style={emailErr ? {border: '1px solid red', outline: 'none'}: {}}
                                ref={register} 
                                required/>
+                        <span className="errorMessage">{emailErr}</span>
                     </div>
                     <div>
                         <label htmlFor="fullName">Full name</label>
@@ -47,8 +57,11 @@ function SignupPage() {
                         <input type="password" 
                                id="password" 
                                name="password" 
+                               minLength = {6}
+                               style={passErr ? {border: '1px solid red', outline: 'none'}: {}}
                                ref={register} 
                                required/>
+                        <span className="errorMessage">{passErr}</span>
                     </div>
                     <div>
                         <label htmlFor="userType">Account Type</label>

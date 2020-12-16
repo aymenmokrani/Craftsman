@@ -1,17 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './loginPage.scss'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 
 function LoginPage() {
 
 
-    const { register, handleSubmit } = useForm()
+    
 
-    const onSubmit = (data) => {
-        // console.log(data);
-        axios.post('api/login', data).then(result => console.log(result.data))
+    const { register, handleSubmit } = useForm()
+    const [emailErr, setEmailErr] = useState('')
+    const [passErr, setPassErr] = useState('')
+    const history = useHistory()
+
+    const onSubmit = async (data) => {
+        try {
+            const results = await axios.post('api/login', data)
+            console.log(results.data);
+            history.push('/')
+        }
+        catch (err) {
+            console.log(err.response.data);
+            const errs = err.response.data
+            setEmailErr(errs.email)
+            setPassErr(errs.password)
+        }
+        
+        
     }
 
 
@@ -25,18 +41,22 @@ function LoginPage() {
                         <input type="text" 
                                id="email"
                                name="email"
+                               style={emailErr ? {border: '1px solid red', outline: 'none'}: {}}
                                ref={register}
                                required
                                />
+                        <span className="errorMessage">{emailErr}</span>
                     </div>
                     <div>
                         <label htmlFor="password">Password</label>
                         <input type="password" 
                                id="password"
                                name="password"
+                               style={passErr ? {border: '1px solid red', outline: 'none'}: {}}
                                required
                                ref={register}
                                />
+                        <span className="errorMessage">{passErr}</span>
                     </div>
                     <div>
                         <input type="submit" value="Hop in"/>

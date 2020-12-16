@@ -7,6 +7,7 @@ const Category = require('./models/Category')
 const Crafsman = require('./models/Craftsman')
 const Job = require('./models/Job')
 const authRoutes = require('./routes/AuthRoutes')
+const cookieParser = require('cookie-parser')
 
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
@@ -16,6 +17,7 @@ const bodyParser = require('body-parser')
 // MiddleWares
 app.use(bodyParser.json())
 app.use('/api', authRoutes)
+app.use(cookieParser())
 
 
 
