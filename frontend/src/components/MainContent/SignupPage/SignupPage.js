@@ -9,9 +9,16 @@ function SignupPage() {
     const { register, handleSubmit} = useForm()
 
 
-    const onSubmit = (data) => {
-        axios.post('api/signup', data)
-            .then(result => console.log(result.data))
+    const onSubmit = async (data) => {
+        const results = await axios.post('api/signup', data)
+        if (results.data.hasOwnProperty('errors')) {
+            Object.values(results.data.errors).forEach(val => {
+                val.length && console.log(val);
+            })
+        } else {
+            console.log(results.data)
+        }
+        
     }
 
     return (

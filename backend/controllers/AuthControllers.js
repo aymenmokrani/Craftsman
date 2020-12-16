@@ -1,6 +1,28 @@
 const Client = require("../models/Client")
 const Craftsman = require("../models/Craftsman")
 
+
+const handleErrors = (err) => {
+    let obj = {}
+    const errors = {email: '', username: '', password: ''}
+
+    //duplicate errors
+    if (err.code === 11000) {
+        errors.email = "email is alredy registered"
+        return errors
+    } 
+    
+
+    // validation errors
+    err.message.includes('validation failed') &&
+    Object.values(err.errors).forEach(({properties}) => {
+        errors[properties.path] = properties.message
+    })
+    return errors
+
+}
+
+
 module.exports.get_login = (req, res) => {
     res.send("login Page")
 }
@@ -28,34 +50,31 @@ module.exports.post_login = (req, res) => {
     })
 }
 
-module.exports.post_signup = (req, res) => {
+module.exports.post_signup = async (req, res) => {
     // Register a user
-
     const {email, fullName, password, accountType} = req.body
-    if (accountType === 'client') {
-        console.log('simple client register')
+    let user = {email: email, user_name: fullName, password: password}
+
+    if (accountType === 'client') {        
         try {
-            Client.create({
-                email: email,
-                client_name: fullName,
-                password: password
-            }).then(data => {
-                data ? res.end("Client was registered") :
-                res.end("Error, Client wasn't registered")
-            })
-        } catch(e) {
-            res.end("Error, Client wasn't registered")
+            const newUser = await Client.create(user)
+            res.status(201).json(newUser)
+        } catch(err) {
+            const errors = handleErrors(err)
+            res.json({errors})
         }
          
+    } else if(accountType === 'craftsman') {
+        try {
+            const newUser = await Craftsman.create(user)
+            res.status(201).json(newUser)
+        } catch(err) {
+            const errors = handleErrors(err)
+            res.json({errors})
+        }
+        
     } else {
-        Craftsman.create({
-            email: email,
-            craftsman_name: fullName,
-            password: password
-        }).then(data => {
-            data ? res.end("Craftsman was registered") :
-            res.end("Error, Craftsman wasn't registered")
-        })
+        res.status(400).send("wrong user type specified")
     }
     
 }

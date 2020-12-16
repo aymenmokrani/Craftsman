@@ -1,20 +1,22 @@
 const mongoose = require('mongoose')
-
+const { isEmail } = require('validator')
 
 const CrafstmanSchema = mongoose.Schema({
     email: {
         type: String,
-        required: true,
+        required: [true, "please enter an email"],
         unique: true,
-        lowercase: true
+        lowercase: true,
+        validate: [isEmail, "please enter a valid email"]
     },
-    craftsman_name: {
+    user_name: {
         type: String,
-        required: true
+        required: [true, "please enter a craftsman name"]
     },
     password: {
         type: String,
-        required: true
+        required: [true, "please enter a password"],
+        minlength: [6, "mininmum password length is 6 characters"]
     },
     clients: {
         type: [Number],
@@ -23,15 +25,14 @@ const CrafstmanSchema = mongoose.Schema({
     reviews: [{
         owner: {
             type: String,
-            required: true
+            required: [true, "owner id is missing"]
         },
         rating: {
             type: Number,
-            required: true
+            required: [true, "rating is missing"]
         },
         content: {
-            type: String,
-            required: true
+            type: String
         }
     }],
     jobs: [Number]
