@@ -18,7 +18,7 @@ function SignupPage() {
         try {
             const results = await axios.post('api/signup', data)
             console.log(results.data);
-            history.push('/')
+            history.push('/search')
         }
         catch (err) {
             const errs = err.response.data.errors

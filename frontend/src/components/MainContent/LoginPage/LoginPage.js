@@ -18,7 +18,7 @@ function LoginPage() {
         try {
             const results = await axios.post('api/login', data)
             console.log(results.data);
-            history.push('/')
+            history.push('/search')
         }
         catch (err) {
             console.log(err.response.data);

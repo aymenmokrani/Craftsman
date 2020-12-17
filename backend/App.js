@@ -8,6 +8,7 @@ const Crafsman = require('./models/Craftsman')
 const Job = require('./models/Job')
 const authRoutes = require('./routes/AuthRoutes')
 const cookieParser = require('cookie-parser')
+const { requireAuth } = require('./middleware/authMiddleware')
 
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
@@ -39,5 +40,8 @@ mongoose.connection.once('open', () => {
 
 app.get('/', (req, res) => {})
 
+app.get('/api/search', requireAuth, (req, res) => {
+  res.send(true)
+})
  
 app.listen(port, () => {console.log(`listening to ${port}`);})
